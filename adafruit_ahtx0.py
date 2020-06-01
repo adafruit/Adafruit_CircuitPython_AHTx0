@@ -47,7 +47,24 @@ Implementation Notes
 # * Adafruit's Register library: https://github.com/adafruit/Adafruit_CircuitPython_Register
 """
 
-# imports
+import time
+from adafruit_bus_device.i2c_device import I2CDevice
+from micropython import const
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_AHTx0.git"
+
+AHT10_I2CADDR_DEFAULT = const(0x38)  # Default I2C address
+AHT10_CMD_CALIBRATE = const(0xE1)  # Calibration command
+AHT10_CMD_TRIGGER = const(0xAC)  # Trigger reading command
+AHT10_CMD_SOFTRESET = const(0xBA)  # Soft reset command
+AHT10_STATUS_BUSY = const(0x80)  # Status bit for busy
+AHT10_STATUS_CALIBRATED = const(0x08)  # Status bit for calibrated
+
+
+class AHTx0:
+    def __init__(self, i2c_bus, address=AHT10_I2CADDR_DEFAULT):
+        self.i2c_device = I2CDevice.(i2c_bus, address)
+        time.sleep(0.02)  # 20ms delay
+
+
