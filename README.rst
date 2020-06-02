@@ -17,7 +17,7 @@ Introduction
     :target: https://github.com/psf/black
     :alt: Code Style: Black
 
-CircuitPython driver for the Adafruit AHT10 Humidity and Temperature Sensor
+CircuitPython driver for the Adafruit AHT10 or AHT20 Humidity and Temperature Sensor
 
 
 Dependencies
