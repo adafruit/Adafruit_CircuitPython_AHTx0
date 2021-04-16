@@ -26,7 +26,7 @@ Table of Contents
 .. toctree::
     :caption: Related Products
 
-    https://www.adafruit.com/product/4566
+    Adafruit AHT20 - Temperature & Humidity Sensor Breakout Board <https://www.adafruit.com/product/4566>
 
 .. toctree::
     :caption: Other Links
