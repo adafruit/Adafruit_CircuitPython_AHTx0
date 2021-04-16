@@ -6,7 +6,7 @@
 `adafruit_ahtx0`
 ================================================================================
 
-CircuitPython driver for the Adafruit AHT10 Humidity and Temperature Sensor
+CircuitPython driver for the Adafruit AHT10/AHT20 Temperature & Humidity Sensor
 
 
 * Author(s): Kattni Rembor
@@ -16,7 +16,7 @@ Implementation Notes
 
 **Hardware:**
 
-* This is a library for the Adafruit AHT20 breakout:
+* This is a library for the Adafruit AHT20 Temperature & Humidity Sensor breakout:
   https://www.adafruit.com/product/4566
 
 **Software and Dependencies:**
@@ -42,7 +42,39 @@ AHTX0_STATUS_CALIBRATED = const(0x08)  # Status bit for calibrated
 
 
 class AHTx0:
-    """Interface library for AHT10/AHT20 temperature+humidity sensors"""
+    """
+    Interface library for AHT10/AHT20 temperature+humidity sensors
+
+    :param ~busio.I2C i2c_bus: The I2C bus the AHT10/AHT20 is connected to.
+    :param address: The I2C device address for the sensor. Default is :const:`0x38`
+
+    **Quickstart: Importing and using the AHT10/AHT20 temperature sensor**
+
+        Here is one way of importing the `AHTx0` class so you can use it with the name ``aht``.
+        First you will need to import the libraries to use the sensor
+
+        .. code-block:: python
+
+            import busio
+            import board
+            import adafruit_ahtx0
+
+        Once this is done you can define your `busio.I2C` object and define your sensor object
+
+        .. code-block:: python
+
+            i2c = busio.I2C(board.SCL, board.SDA)
+            aht = adafruit_ahtx0.AHTx0(i2c)
+
+        Now you have access to the temperature and humidity using
+        the :attr:`temperature` and :attr:`relative_humidity` attributes
+
+        .. code-block:: python
+
+            temperature = aht.temperature
+            relative_humidity = aht.relative_humidity
+
+    """
 
     def __init__(self, i2c_bus, address=AHTX0_I2CADDR_DEFAULT):
         time.sleep(0.02)  # 20ms delay to wake up
@@ -90,7 +122,7 @@ class AHTx0:
 
     @property
     def temperature(self):
-        """The measured temperature in degrees Celcius."""
+        """The measured temperature in degrees Celsius."""
         self._readdata()
         return self._temp
 
