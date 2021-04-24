@@ -46,24 +46,23 @@ class AHTx0:
     Interface library for AHT10/AHT20 temperature+humidity sensors
 
     :param ~busio.I2C i2c_bus: The I2C bus the AHT10/AHT20 is connected to.
-    :param address: The I2C device address for the sensor. Default is :const:`0x38`
+    :param int address: The I2C device address. Default is :const:`0x38`
 
     **Quickstart: Importing and using the AHT10/AHT20 temperature sensor**
 
-        Here is one way of importing the `AHTx0` class so you can use it with the name ``aht``.
+        Here is an example of using the :class:`AHTx0` class.
         First you will need to import the libraries to use the sensor
 
         .. code-block:: python
 
-            import busio
             import board
             import adafruit_ahtx0
 
-        Once this is done you can define your `busio.I2C` object and define your sensor object
+        Once this is done you can define your `board.I2C` object and define your sensor object
 
         .. code-block:: python
 
-            i2c = busio.I2C(board.SCL, board.SDA)
+            i2c = board.I2C()  # uses board.SCL and board.SDA
             aht = adafruit_ahtx0.AHTx0(i2c)
 
         Now you have access to the temperature and humidity using

@@ -23,6 +23,8 @@ Table of Contents
 .. toctree::
     :caption: Tutorials
 
+    Adafruit AHT20 - Temperature & Humidity Sensor Breakout Board Learning Guide <https://learn.adafruit.com/adafruit-aht20>
+
 .. toctree::
     :caption: Related Products
 
