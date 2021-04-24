@@ -7,11 +7,10 @@ Basic `AHTx0` example test
 
 import time
 import board
-import busio
 import adafruit_ahtx0
 
-# Create the sensor object using I2C
-i2c = busio.I2C(board.SCL, board.SDA)
+# Create sensor object, communicating over the board's default I2C bus
+i2c = board.I2C()
 sensor = adafruit_ahtx0.AHTx0(i2c)
 
 while True:
