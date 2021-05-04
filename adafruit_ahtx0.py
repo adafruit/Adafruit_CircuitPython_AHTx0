@@ -16,14 +16,17 @@ Implementation Notes
 
 **Hardware:**
 
-* This is a library for the Adafruit AHT20 Temperature & Humidity Sensor breakout:
-  https://www.adafruit.com/product/4566
+* `Adafruit AHT20 Temperature & Humidity Sensor breakout:
+  <https://www.adafruit.com/product/4566>`_ (Product ID: 4566)
 
 **Software and Dependencies:**
 
 * Adafruit CircuitPython firmware for the supported boards:
-  https://github.com/adafruit/circuitpython/releases
-* Adafruit's Bus Device library: https://github.com/adafruit/Adafruit_CircuitPython_BusDevice
+  https://circuitpython.org/downloads
+
+* Adafruit's Bus Device library:
+  https://github.com/adafruit/Adafruit_CircuitPython_BusDevice
+
 """
 
 import time
