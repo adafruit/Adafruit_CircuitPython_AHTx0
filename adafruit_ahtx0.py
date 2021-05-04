@@ -17,7 +17,7 @@ Implementation Notes
 **Hardware:**
 
 * `Adafruit AHT20 Temperature & Humidity Sensor breakout:
-  https://www.adafruit.com/product/4566`_ (Product ID: 4566)
+  <https://www.adafruit.com/product/4566>`_ (Product ID: 4566)
 
 **Software and Dependencies:**
 
