@@ -30,7 +30,13 @@ Implementation Notes
 """
 
 import time
-import busio
+
+try:
+    # This is only needed for typing
+    import busio  # pylint: disable=unused-import
+except ImportError:
+    pass
+
 
 from adafruit_bus_device.i2c_device import I2CDevice
 from micropython import const
