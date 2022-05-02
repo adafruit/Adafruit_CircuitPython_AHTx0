@@ -86,7 +86,9 @@ class AHTx0:
 
     """
 
-    def __init__(self, i2c_bus: busio.I2C, address: int = AHTX0_I2CADDR_DEFAULT):
+    def __init__(
+        self, i2c_bus: busio.I2C, address: int = AHTX0_I2CADDR_DEFAULT
+    ) -> None:
         time.sleep(0.02)  # 20ms delay to wake up
         self.i2c_device = I2CDevice(i2c_bus, address)
         self._buf = bytearray(6)
