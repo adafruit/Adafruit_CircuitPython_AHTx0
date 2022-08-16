@@ -41,7 +41,7 @@ except ImportError:
 from adafruit_bus_device.i2c_device import I2CDevice
 from micropython import const
 
-__version__: str = "0.0.0-auto.0"
+__version__: str = "0.0.0+auto.0"
 __repo__: str = "https://github.com/adafruit/Adafruit_CircuitPython_AHTx0.git"
 
 AHTX0_I2CADDR_DEFAULT: int = const(0x38)  # Default I2C address
