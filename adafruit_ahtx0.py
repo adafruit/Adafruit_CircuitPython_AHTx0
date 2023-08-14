@@ -106,15 +106,21 @@ class AHTx0:
         time.sleep(0.02)  # 20ms delay to wake up
 
     def calibrate(self) -> bool:
-        """Ask the sensor to self-calibrate. May not 'succeed' on newer AHT20s."""
-        self._buf[0] = AHTX0_CMD_CALIBRATE
-        self._buf[1] = 0x08
-        self._buf[2] = 0x00
-        with self.i2c_device as i2c:
-            i2c.write(self._buf, start=0, end=3)
-        while self.status & AHTX0_STATUS_BUSY:
-            time.sleep(0.01)
-        return True
+        """Ask the sensor to self-calibrate. Returns True on success, False otherwise"""
+        """Newer AHT20's may not succeed, so wrapping in try/except"""
+        try:
+            self._buf[0] = AHTX0_CMD_CALIBRATE
+            self._buf[1] = 0x08
+            self._buf[2] = 0x00
+            with self.i2c_device as i2c:
+                i2c.write(self._buf, start=0, end=3)
+            while self.status & AHTX0_STATUS_BUSY:
+                time.sleep(0.01)
+            if not self.status & AHTX0_STATUS_CALIBRATED:
+                return False
+            return True
+        except:
+            pass
 
     @property
     def status(self) -> int:
