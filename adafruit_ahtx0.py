@@ -116,17 +116,18 @@ class AHTx0:
             try:
                 # Newer AHT20's may not succeed with old command, so wrapping in try/except
                 i2c.write(self._buf, start=0, end=3)
-            except Exception:  # pylint: disable=broad-except
+            except (RuntimeError, OSError):
                 calibration_failed = True
 
         if calibration_failed:
             # try another calibration command for newer AHT20's
+            # print("Calibration failed, trying AH20 command")
             time.sleep(0.01)
             self._buf[0] = AHT20_CMD_CALIBRATE
             with self.i2c_device as i2c:
                 try:
                     i2c.write(self._buf, start=0, end=3)
-                except Exception:
+                except (RuntimeError, OSError):
                     pass
 
         while self.status & AHTX0_STATUS_BUSY:
