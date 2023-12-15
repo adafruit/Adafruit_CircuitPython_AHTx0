@@ -45,7 +45,8 @@ __version__: str = "0.0.0+auto.0"
 __repo__: str = "https://github.com/adafruit/Adafruit_CircuitPython_AHTx0.git"
 
 AHTX0_I2CADDR_DEFAULT: int = const(0x38)  # Default I2C address
-AHTX0_CMD_CALIBRATE: int = const(0xE1)  # Calibration command
+AHT10_CMD_CALIBRATE: int = const(0xE1)  # Calibration command for AHT10 sensor
+AHT20_CMD_CALIBRATE: int = const(0xBE)  # Calibration command for AHT20 sensor
 AHTX0_CMD_TRIGGER: int = const(0xAC)  # Trigger reading command
 AHTX0_CMD_SOFTRESET: int = const(0xBA)  # Soft reset command
 AHTX0_STATUS_BUSY: int = const(0x80)  # Status bit for busy
@@ -107,15 +108,27 @@ class AHTx0:
 
     def calibrate(self) -> bool:
         """Ask the sensor to self-calibrate. Returns True on success, False otherwise"""
-        # Newer AHT20's may not succeed, so wrapping in try/except
-        self._buf[0] = AHTX0_CMD_CALIBRATE
+        self._buf[0] = AHT10_CMD_CALIBRATE
         self._buf[1] = 0x08
         self._buf[2] = 0x00
+        calibration_failed = False
         with self.i2c_device as i2c:
             try:
+                # Newer AHT20's may not succeed with old command, so wrapping in try/except
                 i2c.write(self._buf, start=0, end=3)
             except Exception:  # pylint: disable=broad-except
-                pass
+                calibration_failed = True
+
+        if calibration_failed:
+            # try another calibration command for newer AHT20's
+            time.sleep(0.01)
+            self._buf[0] = AHT20_CMD_CALIBRATE
+            with self.i2c_device as i2c:
+                try:
+                    i2c.write(self._buf, start=0, end=3)
+                except Exception:
+                    pass
+
         while self.status & AHTX0_STATUS_BUSY:
             time.sleep(0.01)
         if not self.status & AHTX0_STATUS_CALIBRATED:
