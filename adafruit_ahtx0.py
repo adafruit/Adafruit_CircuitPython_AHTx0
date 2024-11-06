@@ -130,7 +130,12 @@ class AHTx0:
                 except (RuntimeError, OSError):
                     pass
 
+        start_busy_time = time.monotonic()
         while self.status & AHTX0_STATUS_BUSY:
+            if time.monotonic() - start_busy_time > 3.0:
+                raise RuntimeError(
+                    "Sensor remained busy 3 seconds. Could not be calibrated"
+                )
             time.sleep(0.01)
         if not self.status & AHTX0_STATUS_CALIBRATED:
             return False
