@@ -6,7 +6,9 @@ Basic `AHTx0` example test
 """
 
 import time
+
 import board
+
 import adafruit_ahtx0
 
 # Create sensor object, communicating over the board's default I2C bus
