@@ -33,7 +33,7 @@ import time
 
 try:
     # This is only needed for typing
-    import busio  # pylint: disable=unused-import
+    import busio
 except ImportError:
     pass
 
@@ -87,9 +87,7 @@ class AHTx0:
 
     """
 
-    def __init__(
-        self, i2c_bus: busio.I2C, address: int = AHTX0_I2CADDR_DEFAULT
-    ) -> None:
+    def __init__(self, i2c_bus: busio.I2C, address: int = AHTX0_I2CADDR_DEFAULT) -> None:
         time.sleep(0.02)  # 20ms delay to wake up
         self.i2c_device = I2CDevice(i2c_bus, address)
         self._buf = bytearray(6)
@@ -133,9 +131,7 @@ class AHTx0:
         start_busy_time = time.monotonic()
         while self.status & AHTX0_STATUS_BUSY:
             if time.monotonic() - start_busy_time > 3.0:
-                raise RuntimeError(
-                    "Sensor remained busy 3 seconds. Could not be calibrated"
-                )
+                raise RuntimeError("Sensor remained busy 3 seconds. Could not be calibrated")
             time.sleep(0.01)
         if not self.status & AHTX0_STATUS_CALIBRATED:
             return False
@@ -173,9 +169,7 @@ class AHTx0:
         with self.i2c_device as i2c:
             i2c.readinto(self._buf, start=0, end=6)
 
-        self._humidity = (
-            (self._buf[1] << 12) | (self._buf[2] << 4) | (self._buf[3] >> 4)
-        )
+        self._humidity = (self._buf[1] << 12) | (self._buf[2] << 4) | (self._buf[3] >> 4)
         self._humidity = (self._humidity * 100) / 0x100000
         self._temp = ((self._buf[3] & 0xF) << 16) | (self._buf[4] << 8) | self._buf[5]
         self._temp = ((self._temp * 200.0) / 0x100000) - 50
